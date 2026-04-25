@@ -98,6 +98,13 @@ if [ -f "$DM_FILE" ]; then
 	cd $PKG_PATH && echo "diskman has been fixed!"
 fi
 
+#强制移除kmod-nf-ipt避免ip_tables.ko缺失错误
+KMOD_IPT=$(find ../feeds -path "*/kmod-nf-ipt/Makefile" 2>/dev/null)
+if [ -n "$KMOD_IPT" ]; then
+	mv "$KMOD_IPT" "$KMOD_IPT.bak"
+	echo "kmod-nf-ipt has been removed!"
+fi
+
 #修复luci-app-netspeedtest相关问题
 if [ -d *"luci-app-netspeedtest"* ]; then
 	echo " "
